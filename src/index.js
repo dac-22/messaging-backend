@@ -27,7 +27,7 @@ app.get("/messages", async (req, res) => {
 
   await connection.connectAsync();
 
-  let sql = `SELECT * FROM message ORDER BY ID DESC`;
+  let sql = `SELECT * FROM message`;
   list = await connection.queryAsync(sql);
 
   await connection.endAsync();
