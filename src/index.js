@@ -33,4 +33,23 @@ app.get("/messages", async (req, res) => {
   res.json(list);
 });
 
+/* http://localhost:3000/message */
+app.post("/message", async (req, res) => {
+  let connection = createConnection(connectionUri);
+  bluebird.promisifyAll(connection);
+
+  await connection.connectAsync();
+
+  let message = "Hello Mumbai";
+  let reply = 0;
+  // let sql = `INSERT INTO message (message, reply) VALUES ('${message}', ${reply})`;
+  let sql = `INSERT INTO message (message, reply) VALUES (?, ?)`;
+  await connection.queryAsync(sql, [message, reply]);
+
+  await connection.endAsync();
+
+  let output = { msg: "Record Created Successfully" };
+  res.json(output);
+});
+
 app.listen(3000);
