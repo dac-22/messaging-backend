@@ -1,11 +1,13 @@
 import express from "express";
 import bluebird from "bluebird";
 import { createConnection } from "mysql";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 const connectionUri = {
   host: "localhost",
@@ -25,7 +27,7 @@ app.get("/messages", async (req, res) => {
 
   await connection.connectAsync();
 
-  let sql = `SELECT * FROM message`;
+  let sql = `SELECT * FROM message ORDER BY ID DESC`;
   list = await connection.queryAsync(sql);
 
   await connection.endAsync();
