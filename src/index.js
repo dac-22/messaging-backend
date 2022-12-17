@@ -15,7 +15,7 @@ const connectionUri = {
 };
 
 /* http://localhost:3000/ */
-app.get("/", (req, res) => res.send("Hello"));
+app.get("/", (req, res) => res.send("Hello, NodeJS!"));
 
 /* http://localhost:3000/messages */
 app.get("/messages", async (req, res) => {
@@ -40,8 +40,8 @@ app.post("/message", async (req, res) => {
 
   await connection.connectAsync();
 
-  let message = "Hello Mumbai";
-  let reply = 0;
+  let message = req.body.message;
+  let reply = req.body.reply;
   // let sql = `INSERT INTO message (message, reply) VALUES ('${message}', ${reply})`;
   let sql = `INSERT INTO message (message, reply) VALUES (?, ?)`;
   await connection.queryAsync(sql, [message, reply]);
